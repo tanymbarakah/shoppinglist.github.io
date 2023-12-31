@@ -53,11 +53,6 @@ function updateTotal() {
     document.getElementById("total").textContent = "Grand Total: ৳" + total.toFixed(2);
 }
 
-function exportToPDF() {
-    var element = document.getElementById("cart");
-    html2pdf(element);
-}
-
 function shareToWhatsApp() {
     var cartItems = document.querySelectorAll(".item-input");
     var cartPrices = document.querySelectorAll(".price-input");
@@ -82,5 +77,7 @@ function shareToWhatsApp() {
 
     // Creating a WhatsApp share link
     var whatsappLink = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
-window.open(whatsappLink, "_blank");
+    
+    // Use window.location.href to navigate to the WhatsApp link
+    window.location.href = whatsappLink;
 }
