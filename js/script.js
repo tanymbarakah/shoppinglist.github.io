@@ -25,12 +25,12 @@ function completePurchase(button) {
     var price = row.querySelector(".price-input").value;
 
     if (item.trim() === "" || isNaN(parseFloat(price))) {
-        prompt("Please fill in both item and price before completing the purchase.");
+        window.confirm("Please fill in both item and price before completing the purchase.");
         return;
     }
 
     // Add logic for completing the purchase (e.g., send data to server)
-    prompt("Purchase completed for item: " + item + " with a price of ৳" + parseFloat(price).toFixed(2));
+    window.confirm("Purchase completed for item: " + item + " with a price of ৳" + parseFloat(price).toFixed(2));
 
     // Add complete mark
     row.querySelector(".item-input").classList.add('complete-mark');
