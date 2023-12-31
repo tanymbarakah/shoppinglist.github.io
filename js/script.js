@@ -97,7 +97,10 @@ function saveCart() {
         }
     }
 
-    // You can save 'cartItems' to your preferred storage (e.g., localStorage, database)
-    // For now, we'll just log the cart items to the console.
-    console.log("Cart saved:", cartItems);
+    // Save 'cartItems' to local storage
+    localStorage.setItem('shoppingCart', JSON.stringify(cartItems));
+
+    // You can also notify the user that the cart has been saved
+    prompt("Cart saved to local storage!");
 }
+
