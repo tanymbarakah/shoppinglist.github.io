@@ -82,4 +82,5 @@ function shareToWhatsApp() {
 
     // Creating a WhatsApp share link
     var whatsappLink = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
+window.open(whatsappLink, "_blank");
 }
