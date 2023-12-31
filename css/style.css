@@ -109,6 +109,23 @@ body {
             background-color: #2980b9;
         }
 
+        #save-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+    
+        #save-btn:hover {
+            background-color: #2980b9;
+        }
+
+
         @media (max-width: 768px) {
             table {
                 font-size: 14px;
