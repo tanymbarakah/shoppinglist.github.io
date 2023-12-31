@@ -30,7 +30,7 @@ function completePurchase(button) {
     }
 
     // Add logic for completing the purchase (e.g., send data to server)
-    prompt("Purchase completed for item: " + item + " with a price of ৳" + parseFloat(price).toFixed(2));
+    window.confirm("Purchase completed for item: " + item + " with a price of ৳" + parseFloat(price).toFixed(2));
 
     // Add complete mark
     row.querySelector(".item-input").classList.add('complete-mark');
@@ -76,8 +76,8 @@ function shareToWhatsApp() {
     message += "\nDate and Time: " + dateTime;
 
     // Creating a WhatsApp share link
-    var whatsappLink = "https://wa.me/?text=" + encodeURIComponent(message);
-    window.open(whatsappLink, "_blank");
+    var whatsappLink = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
+window.open(whatsappLink, "_blank");
 }
 
 
