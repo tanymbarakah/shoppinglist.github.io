@@ -109,38 +109,43 @@ function shareOnMessenger() {
         }
 
         function copyToClipboard() {
-            var cartItems = document.querySelectorAll(".item-input");
-            var cartPrices = document.querySelectorAll(".price-input");
+        var cartItems = document.querySelectorAll(".item-input");
+        var cartPrices = document.querySelectorAll(".price-input");
 
-            var message = "Shopping Cart:\n";
+        var message = "Shopping Cart:\n";
 
-            for (var i = 0; i < cartItems.length; i++) {
-                var item = cartItems[i].value.trim();
-                var price = cartPrices[i].value.trim();
+        for (var i = 0; i < cartItems.length; i++) {
+            var item = cartItems[i].value.trim();
+            var price = cartPrices[i].value.trim();
 
-                if (item !== "" && !isNaN(parseFloat(price))) {
-                    message += "Item: " + item + ", Price: ৳" + parseFloat(price).toFixed(2) + "\n";
-                }
+            if (item !== "" && !isNaN(parseFloat(price))) {
+                message += "Item: " + item + ", Price: ৳" + parseFloat(price).toFixed(2) + "\n";
             }
+        }
 
-            var totalValue = document.getElementById("total").textContent;
-            message += "\n" + totalValue;
+        var totalValue = document.getElementById("total").textContent;
+        message += "\n" + totalValue;
 
-            // Adding date and time
-            var dateTime = new Date().toLocaleString();
-            message += "\nDate and Time: " + dateTime;
+        // Adding date and time
+        var dateTime = new Date().toLocaleString();
+        message += "\nDate and Time: " + dateTime;
 
-            // Create a temporary textarea element to hold the message
-            var textarea = document.createElement("textarea");
-            textarea.value = message;
-            document.body.appendChild(textarea);
+        // Create a temporary textarea element to hold the message
+        var textarea = document.createElement("textarea");
+        textarea.value = message;
+        document.body.appendChild(textarea);
 
-            // Select and copy the content to the clipboard
-            textarea.select();
-            document.execCommand("copy");
-
-            // Remove the temporary textarea
-            document.body.removeChild(textarea);
-
-            window.confirm("Shopping cart content copied to clipboard. You can now paste it anywhere.");
+        // Use the Clipboard API to copy the content to the clipboard
+        navigator.clipboard.writeText(textarea.value)
+            .then(function () {
+                alert("Shopping cart content copied to clipboard. You can now paste it anywhere.");
+            })
+            .catch(function (err) {
+                console.error('Unable to copy to clipboard', err);
+            })
+            .finally(function () {
+                // Remove the temporary textarea
+                document.body.removeChild(textarea);
+            });
+    
         }
