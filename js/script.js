@@ -25,7 +25,7 @@ function completePurchase(button) {
     var price = row.querySelector(".price-input").value;
 
     if (item.trim() === "" || isNaN(parseFloat(price))) {
-        alert("Please fill in both item and price before completing the purchase.");
+        prompt("Please fill in both item and price before completing the purchase.");
         return;
     }
 
