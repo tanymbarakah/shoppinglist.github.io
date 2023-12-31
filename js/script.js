@@ -108,7 +108,7 @@ function shareOnMessenger() {
             window.open(messengerLink, "_blank");
         }
 
-        function copyToClipboard() {
+         function copyToClipboard() {
         var cartItems = document.querySelectorAll(".item-input");
         var cartPrices = document.querySelectorAll(".price-input");
 
@@ -135,17 +135,19 @@ function shareOnMessenger() {
         textarea.value = message;
         document.body.appendChild(textarea);
 
-        // Use the Clipboard API to copy the content to the clipboard
-        navigator.clipboard.writeText(textarea.value)
-            .then(function () {
-                alert("Shopping cart content copied to clipboard. You can now paste it anywhere.");
-            })
-            .catch(function (err) {
-                console.error('Unable to copy to clipboard', err);
-            })
-            .finally(function () {
-                // Remove the temporary textarea
-                document.body.removeChild(textarea);
-            });
+        // Select the text in the textarea
+        textarea.select();
+
+        try {
+            // Execute the copy command
+            document.execCommand('copy');
+            alert("Shopping cart content copied to clipboard. You can now paste it anywhere.");
+        } catch (err) {
+            console.error('Unable to copy to clipboard', err);
+        } finally {
+            // Remove the temporary textarea
+            document.body.removeChild(textarea);
+        }
+    
     
         }
