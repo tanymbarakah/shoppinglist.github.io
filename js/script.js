@@ -76,8 +76,7 @@ function shareToWhatsApp() {
     message += "\nDate and Time: " + dateTime;
 
     // Creating a WhatsApp share link
-    var whatsappLink = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
+    var whatsappIntentLink = "intent://send?text=" + encodeURIComponent(message) + "#Intent;package=com.whatsapp;end";
+    window.location.href = whatsappIntentLink;
 
-    // Open the WhatsApp link in a new tab or window
-    window.open(whatsappLink, "_blank");
 }
