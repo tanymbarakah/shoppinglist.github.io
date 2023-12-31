@@ -79,3 +79,68 @@ function shareToWhatsApp() {
     var whatsappLink = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
 window.open(whatsappLink, "_blank");
 }
+
+
+function shareOnMessenger() {
+            var cartItems = document.querySelectorAll(".item-input");
+            var cartPrices = document.querySelectorAll(".price-input");
+
+            var message = "Shopping Cart:\n";
+
+            for (var i = 0; i < cartItems.length; i++) {
+                var item = cartItems[i].value.trim();
+                var price = cartPrices[i].value.trim();
+
+                if (item !== "" && !isNaN(parseFloat(price))) {
+                    message += "Item: " + item + ", Price: ৳" + parseFloat(price).toFixed(2) + "\n";
+                }
+            }
+
+            var totalValue = document.getElementById("total").textContent;
+            message += "\n" + totalValue;
+
+            // Adding date and time
+            var dateTime = new Date().toLocaleString();
+            message += "\nDate and Time: " + dateTime;
+
+            // Creating a Messenger share link
+            var messengerLink = "https://www.facebook.com/dialog/send?link=" + encodeURIComponent(window.location.href) + "&app_id=123456789&redirect_uri=" + encodeURIComponent(window.location.href) + "&display=popup&quote=" + encodeURIComponent(message);
+            window.open(messengerLink, "_blank");
+        }
+
+        function copyToClipboard() {
+            var cartItems = document.querySelectorAll(".item-input");
+            var cartPrices = document.querySelectorAll(".price-input");
+
+            var message = "Shopping Cart:\n";
+
+            for (var i = 0; i < cartItems.length; i++) {
+                var item = cartItems[i].value.trim();
+                var price = cartPrices[i].value.trim();
+
+                if (item !== "" && !isNaN(parseFloat(price))) {
+                    message += "Item: " + item + ", Price: ৳" + parseFloat(price).toFixed(2) + "\n";
+                }
+            }
+
+            var totalValue = document.getElementById("total").textContent;
+            message += "\n" + totalValue;
+
+            // Adding date and time
+            var dateTime = new Date().toLocaleString();
+            message += "\nDate and Time: " + dateTime;
+
+            // Create a temporary textarea element to hold the message
+            var textarea = document.createElement("textarea");
+            textarea.value = message;
+            document.body.appendChild(textarea);
+
+            // Select and copy the content to the clipboard
+            textarea.select();
+            document.execCommand("copy");
+
+            // Remove the temporary textarea
+            document.body.removeChild(textarea);
+
+            window.confirm("Shopping cart content copied to clipboard. You can now paste it anywhere.");
+        }
