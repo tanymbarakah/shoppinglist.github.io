@@ -77,7 +77,11 @@ function shareToWhatsApp() {
 
     // Creating a WhatsApp share link
     var whatsappLink = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
-    
-    // Use window.location.href to navigate to the WhatsApp link
-    window.location.href = whatsappLink;
+
+    // Create an anchor element
+    var link = document.createElement('a');
+    link.href = whatsappLink;
+
+    // Trigger a click event on the anchor element
+    link.click();
 }
