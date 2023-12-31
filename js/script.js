@@ -79,3 +79,25 @@ function shareToWhatsApp() {
     var whatsappLink = "https://wa.me/?text=" + encodeURIComponent(message);
     window.open(whatsappLink, "_blank");
 }
+
+function saveCart() {
+    var cartItems = [];
+    var itemInputs = document.querySelectorAll(".item-input");
+    var priceInputs = document.querySelectorAll(".price-input");
+
+    for (var i = 0; i < itemInputs.length; i++) {
+        var item = itemInputs[i].value.trim();
+        var price = priceInputs[i].value.trim();
+
+        if (item !== "" && !isNaN(parseFloat(price))) {
+            cartItems.push({
+                item: item,
+                price: parseFloat(price).toFixed(2)
+            });
+        }
+    }
+
+    // You can save 'cartItems' to your preferred storage (e.g., localStorage, database)
+    // For now, we'll just log the cart items to the console.
+    console.log("Cart saved:", cartItems);
+}
