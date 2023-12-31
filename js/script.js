@@ -114,7 +114,7 @@ function copyToClipboard() {
         try {
             // Execute the copy command
             document.execCommand('copy');
-            alert("Shopping cart content copied to clipboard. You can now paste it anywhere.");
+            window.confirm("Shopping cart content copied to clipboard. You can now paste it anywhere.");
         } catch (err) {
             console.error('Unable to copy to clipboard', err);
         } finally {
