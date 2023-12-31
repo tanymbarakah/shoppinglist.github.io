@@ -110,6 +110,36 @@ body {
         }
 
 
+ #share-messenger-btn {
+            background-color: #0084ff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        #share-messenger-btn:hover {
+            background-color: #006bbf;
+        }
+
+        #copy-btn {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #copy-btn:hover {
+            background-color: #555;
+        }
+
+
         @media (max-width: 768px) {
             table {
                 font-size: 14px;
