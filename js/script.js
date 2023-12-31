@@ -75,8 +75,8 @@ function shareToWhatsApp() {
     var dateTime = new Date().toLocaleString();
     message += "\nDate and Time: " + dateTime;
 
-    // Creating a WhatsApp share link
-    var whatsappIntentLink = "intent://send?text=" + encodeURIComponent(message) + "#Intent;package=com.whatsapp;end";
-    window.location.href = whatsappIntentLink;
+    // Display the message to the user
+    alert("Please copy the following message and paste it into your WhatsApp:\n\n" + message);
+
 
 }
