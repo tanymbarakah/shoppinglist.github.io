@@ -75,18 +75,7 @@ function shareToWhatsApp() {
     var dateTime = new Date().toLocaleString();
     message += "\nDate and Time: " + dateTime;
 
-    // Create a temporary textarea element to hold the message
-    var textarea = document.createElement("textarea");
-    textarea.value = message;
-    document.body.appendChild(textarea);
-
-    // Select and copy the content to the clipboard
-    textarea.select();
-    document.execCommand("copy");
-
-    // Remove the temporary textarea
-    document.body.removeChild(textarea);
-
-    // Inform the user that the content has been copied
-    prompt("Shopping cart content copied to clipboard. You can now paste it into WhatsApp.");
+    // Creating a WhatsApp share link
+    var whatsappLink = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
+window.open(whatsappLink, "_blank");
 }
