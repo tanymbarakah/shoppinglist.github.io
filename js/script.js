@@ -30,7 +30,9 @@ function completePurchase(button) {
     }
 
     // Add logic for completing the purchase (e.g., send data to server)
-    confirm("Purchase completed for item: " + item + " with a price of ৳" + parseFloat(price).toFixed(2));
+    if (confirm("Purchase completed for item: " + item + " with a price of ৳" + parseFloat(price).toFixed(2));{
+        return;
+    }
 
     // Add complete mark
     row.querySelector(".item-input").classList.add('complete-mark');
