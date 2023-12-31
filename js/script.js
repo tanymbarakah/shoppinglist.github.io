@@ -80,27 +80,4 @@ function shareToWhatsApp() {
     window.open(whatsappLink, "_blank");
 }
 
-function saveCart() {
-    var cartItems = [];
-    var itemInputs = document.querySelectorAll(".item-input");
-    var priceInputs = document.querySelectorAll(".price-input");
-
-    for (var i = 0; i < itemInputs.length; i++) {
-        var item = itemInputs[i].value.trim();
-        var price = priceInputs[i].value.trim();
-
-        if (item !== "" && !isNaN(parseFloat(price))) {
-            cartItems.push({
-                item: item,
-                price: parseFloat(price).toFixed(2)
-            });
-        }
-    }
-
-    // Save 'cartItems' to local storage
-    localStorage.setItem('shoppingCart', JSON.stringify(cartItems));
-
-    // You can also notify the user that the cart has been saved
-    prompt("Cart saved to local storage!");
-}
 
