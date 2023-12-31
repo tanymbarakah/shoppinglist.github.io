@@ -30,9 +30,7 @@ function completePurchase(button) {
     }
 
     // Add logic for completing the purchase (e.g., send data to server)
-    if (confirm("Purchase completed for item: " + item + " with a price of ৳" + parseFloat(price).toFixed(2));{
-        return;
-    }
+    prompt("Purchase completed for item: " + item + " with a price of ৳" + parseFloat(price).toFixed(2));
 
     // Add complete mark
     row.querySelector(".item-input").classList.add('complete-mark');
@@ -53,6 +51,11 @@ function updateTotal() {
     }
 
     document.getElementById("total").textContent = "Grand Total: ৳" + total.toFixed(2);
+}
+
+function exportToPDF() {
+    var element = document.getElementById("cart");
+    html2pdf(element);
 }
 
 function shareToWhatsApp() {
@@ -81,5 +84,3 @@ function shareToWhatsApp() {
     var whatsappLink = "https://api.whatsapp.com/send?text=" + encodeURIComponent(message);
 window.open(whatsappLink, "_blank");
 }
-
-
