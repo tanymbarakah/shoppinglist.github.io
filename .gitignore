@@ -1,0 +1,28 @@
+# Security: Android Keystore & Sensitive Signing Keys
+*.jks
+*.keystore
+*.key
+*.p12
+*.p8
+*.pem
+keystore*
+*password*
+*credentials*
+
+# Android build outputs & binaries
+*.apk
+*.aab
+build/
+bin/
+gen/
+classes/
+*.dex
+
+# OS and Editor metadata
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+.vscode/
+.idea/
+*.log

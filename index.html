@@ -1,73 +1,244 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
-  <link rel="stylesheet" href="css/style.css"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#080c14">
+    <title>Smart Shopping Cart & Cash Out Calculator | শপিং লিস্ট ও চার্জ ক্যালকুলেটর</title>
+    
+    <!-- Google Fonts: Noto Sans Bengali & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome 6.5.0 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <!-- Ambient Background Lighting -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMsg">বিজ্ঞপ্তি</span>
+    </div>
+
+    <!-- Main Container -->
     <div id="container">
-        <h2>Shopping Cart</h2>
         
-        <table id="cart">
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Price</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="cart-body">
-                <!-- Cart items will be added here dynamically -->
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td id="total" colspan="2">Grand Total: ৳0.00</td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
-<button id="add-item-btn" onclick="addItem()">Add Item</button>
-        <button id="share-whatsapp-btn" onclick="shareToWhatsApp()">Share to WhatsApp</button>
-        <button id="copy-btn" onclick="copyToClipboard()">Copy</button>
+        <!-- Header Controls -->
+        <header class="card-header">
+            <div class="header-badge">
+                <span class="badge-dot"></span>
+                <span>Smart Shopping Cart</span>
+            </div>
 
+            <div class="header-actions">
+                <button id="themeToggle" class="icon-btn" onclick="toggleTheme()" title="থিম পরিবর্তন করুন" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-sun sun-icon"></i>
+                    <i class="fa-solid fa-moon moon-icon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Title Section -->
+        <div class="title-section">
+            <h2 class="main-title">Shopping Cart & Calculator</h2>
+            <p class="subtitle">সহজে শপিং লিস্ট তৈরি করুন, তাৎক্ষণিক যোগফল ও ক্যাশ আউট চার্জ জানুন</p>
+        </div>
+
+        <!-- Quick Summary Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-label">মোট আইটেম</span>
+                <span class="stat-val" id="statTotalItems">০</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">কেনা সম্পন্ন</span>
+                <span class="stat-val highlight" id="statDoneItems" style="color: var(--accent-emerald);">০</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">বাকি আছে</span>
+                <span class="stat-val" id="statPendingItems" style="color: var(--accent-amber);">০</span>
+            </div>
+        </div>
+
+        <!-- Shopping Cart Table Responsive Wrapper -->
+        <div class="table-responsive">
+            <table id="cart">
+                <thead>
+                    <tr>
+                        <th class="col-item">Item / বিবরণ</th>
+                        <th class="col-price">Price / দাম (৳)</th>
+                        <th class="col-action" style="text-align: center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-body">
+                    <!-- Dynamic shopping rows will be injected here -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td id="total" colspan="2">Grand Total: ৳0.00</td>
+                        <td style="text-align: center;">
+                            <span id="itemCountBadge" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">০ টি পণ্য</span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- Empty State Prompt -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <p>আপনার শপিং লিস্ট খালি! নিচে <strong>"Add Item"</strong> বোতামে ক্লিক করে পণ্য যোগ করুন।</p>
+            </div>
+        </div>
+
+        <!-- Primary Action Buttons Grid -->
+        <div class="controls-grid">
+            <button id="add-item-btn" onclick="addItem()">
+                <i class="fa-solid fa-plus"></i> Add Item
+            </button>
+            <button id="share-whatsapp-btn" onclick="shareToWhatsApp()">
+                <i class="fab fa-whatsapp"></i> Share to WhatsApp
+            </button>
+            <button id="copy-btn" onclick="copyToClipboard()">
+                <i class="fa-regular fa-copy"></i> Copy List
+            </button>
+            <button id="clear-btn" class="secondary-btn" onclick="clearCart()">
+                <i class="fa-solid fa-trash-can"></i> Clear All
+            </button>
+        </div>
+
+        <!-- ==========================================================================
+             CENTERED CASH OUT CHARGE CALCULATOR
+             "ক্যাশ আউট চার্জ ক্যালকুলেটরটাকে মাঝখানে সেন্টার করো"
+             ========================================================================== -->
+        <section class="cashout-calculator-section" id="cashoutSection">
+            <div class="cashout-header">
+                <div class="cashout-title-group">
+                    <div class="cashout-icon-badge">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div>
+                        <div class="cashout-title">ক্যাশ আউট চার্জ ক্যালকুলেটর</div>
+                        <div class="cashout-subtitle">শপিংয়ের মোট টাকার উপর MFS ক্যাশ আউট ফি জানুন</div>
+                    </div>
+                </div>
+
+                <!-- Auto-sync Switch -->
+                <label class="custom-switch-label" title="শপিং গ্র্যান্ড টোটালের সাথে অটো সিঙ্ক চালু/বন্ধ করুন">
+                    <input type="checkbox" id="syncWithCartCheckbox" checked onchange="toggleCartSync()">
+                    <span>শপিং টোটাল অটো-সিঙ্ক</span>
+                </label>
+            </div>
+
+            <!-- Operator Selector -->
+            <div class="operator-selector" id="opSelector">
+                <button type="button" class="op-btn active" data-op="bkash" onclick="selectOperator('bkash')">
+                    <i class="fa-solid fa-wallet"></i> bKash (বিকাশ)
+                </button>
+                <button type="button" class="op-btn" data-op="nagad" onclick="selectOperator('nagad')">
+                    <i class="fa-solid fa-coins"></i> Nagad (নগদ)
+                </button>
+                <button type="button" class="op-btn" data-op="rocket" onclick="selectOperator('rocket')">
+                    <i class="fa-solid fa-building-columns"></i> Rocket (রকেট)
+                </button>
+                <button type="button" class="op-btn" data-op="upay" onclick="selectOperator('upay')">
+                    <i class="fa-solid fa-credit-card"></i> Upay (উপায়)
+                </button>
+            </div>
+
+            <!-- Method & Priyo Controls -->
+            <div class="method-controls">
+                <div class="method-pills">
+                    <button type="button" class="method-pill active" id="methodAppBtn" onclick="setCashoutMethod('app')">
+                        <i class="fa-solid fa-mobile-screen"></i> অ্যাপ (App)
+                    </button>
+                    <button type="button" class="method-pill" id="methodUssdBtn" onclick="setCashoutMethod('ussd')">
+                        <i class="fa-solid fa-hashtag"></i> ইউএসএসডি (USSD)
+                    </button>
+                </div>
+
+                <div id="bkashPriyoContainer" style="display: inline-flex; align-items: center; gap: 8px;">
+                    <label class="custom-switch-label" title="বিকাশ প্রিয় এজেন্ট নম্বরে ক্যাশ আউট চার্জ কম (১.৪৯%)">
+                        <input type="checkbox" id="bkashPriyoCheckbox" onchange="updateCashOutCalculation()">
+                        <span>প্রিয় এজেন্ট (১.৪৯%)</span>
+                    </label>
+                </div>
+
+                <label class="custom-switch-label" title="হোয়াটসঅ্যাপ মেসেজে ক্যাশ আউট চার্জ অন্তর্ভুক্ত করুন">
+                    <input type="checkbox" id="includeCashoutInShare" checked>
+                    <span>শেয়ারে চার্জ যুক্ত করুন</span>
+                </label>
+            </div>
+
+            <!-- Manual Amount Input (Visible when sync is unchecked) -->
+            <div id="manualAmountWrapper" style="display: none;">
+                <label for="customCashoutAmount" style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px; display: block; font-weight: 600;">কাস্টম টাকার পরিমাণ (Custom Amount):</label>
+                <div class="price-input-wrapper">
+                    <span class="currency-symbol">৳</span>
+                    <input type="number" id="customCashoutAmount" class="price-input" placeholder="0.00" step="1" min="0" oninput="updateCashOutCalculation()">
+                </div>
+            </div>
+
+            <!-- Results Dashboard -->
+            <div class="cashout-results-dashboard">
+                <div class="cashout-res-card">
+                    <span class="res-title">মূল টাকার পরিমাণ</span>
+                    <span class="res-amount" id="calcBaseAmount">৳০.০০</span>
+                    <span class="res-rate-tag" id="calcOpRateLabel">বিকাশ অ্যাপ (১.৮৫%)</span>
+                </div>
+                <div class="cashout-res-card">
+                    <span class="res-title">ক্যাশ আউট চার্জ</span>
+                    <span class="res-amount" id="calcFeeAmount" style="color: var(--accent-rose);">৳০.০০</span>
+                    <span class="res-rate-tag" id="calcFeePerThousand">৳১৮.৫০ প্রতি হাজারে</span>
+                </div>
+                <div class="cashout-res-card total-needed-card">
+                    <span class="res-title">সর্বমোট টাকা প্রয়োজন</span>
+                    <span class="res-amount" id="calcTotalNeeded">৳০.০০</span>
+                    <span class="res-rate-tag" style="color: var(--accent-primary);">আসল টাকা + ক্যাশ আউট ফি</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
         <footer>
-    <div class="social-links">
-        
-        <a href="https://www.facebook.com/tanymbarakah.me" target="_blank" title="Facebook">
-            <i class="fab fa-facebook"></i>
-        </a>
-        <a href="https://www.instagram.com/tanymbarakah/" target="_blank" title="Instagram">
-            <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://x.com/TanymBarakah" target="_blank" title="twitter">
-            <i class="fa-brands fa-x-twitter"></i>
-        </a>
-        <a href="https://wa.link/q7lnyf" target="_blank" title="Whatsapp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/tanym-barakah/" target="_blank" title="LinkedIn">
-            <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="https://github.com/tanymbarakah" target="_blank" title="github">
-            <i class="fa-brands fa-github"></i>
-        </a>
-    </div>
-</footer>
-<p style="text-align: center;"><a href="https://www.linkedin.com/in/tanym-barakah/">By- Tanym barakah</a></p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/tanymbarakah.me" target="_blank" title="Facebook" rel="noopener noreferrer">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/tanymbarakah/" target="_blank" title="Instagram" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://x.com/TanymBarakah" target="_blank" title="twitter" rel="noopener noreferrer">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+                <a href="https://wa.link/q7lnyf" target="_blank" title="Whatsapp" rel="noopener noreferrer">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/tanym-barakah/" target="_blank" title="LinkedIn" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/tanymbarakah" target="_blank" title="github" rel="noopener noreferrer">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+            </div>
+            
+            <p class="author-link"><a href="https://www.linkedin.com/in/tanym-barakah/" target="_blank" rel="noopener noreferrer">By- Tanym barakah</a></p>
+        </footer>
 
     </div>
-   <script src="js/script.js"></script>
+
+    <!-- Application Script -->
+    <script src="js/script.js"></script>
 </body>
 
 </html>
-
-
-
-
-
-
